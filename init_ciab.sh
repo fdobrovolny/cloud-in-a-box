@@ -2,7 +2,14 @@
 
 echo "INIT-CIAB"
 set -x 
-vars="$(tr ' ' '\n' < /proc/cmdline |grep -P '^ciab_.+=.+')"
+
+if [ -e /etc/init-ciab.params ];then
+   param_file="/etc/init-ciab.params"
+else
+   param_file="/proc/cmdline"
+fi
+
+vars="$(tr ' ' '\n' < $param_file |grep -P '^ciab_.+=.+')"
 if [ -n "$vars" ];then
    eval "$vars"
 fi
