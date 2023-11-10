@@ -5,9 +5,10 @@ set -e
 BASE_DIR="$(dirname $(readlink -f $0))"
 source $BASE_DIR/include.sh
 
+add_status "info" "Bootstrap in progress"
 set -x
 
-trap "echo 'BOOTSTRAP FAILED'" TERM INT EXIT
+trap "add_status error 'BOOTSTRAP FAILED'" TERM INT EXIT
 export INTERACTIVE=false
 CLOUD_IN_A_BOX_TYPE=${1:-sandbox}
 
@@ -82,4 +83,4 @@ docker compose -f /opt/manager/docker-compose.yml restart
 wait_for_container_healthy 60 manager-ara-server-1
 
 trap "" TERM INT EXIT
-echo "BOOTSTRAP COMPLETE"
+add_status "info" "BOOTSTRAP COMPLETE"
