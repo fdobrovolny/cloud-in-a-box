@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "INIT-CIAB"
+set -x 
 vars="$(tr ' ' '\n' < /proc/cmdline |grep -P '^ciab_.+=.+')"
 if [ -n "$vars" ];then
    eval "$vars"
